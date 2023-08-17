@@ -4,27 +4,27 @@ const cors = require("cors");
 var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
-var logger = require("morgan");
 
 var indexRouter = require("./routes/index");
 
 var app = express();
-
+// log requests
+var logger = require("morgan");
 app.use(logger("dev"));
+
 app.use(express.json());
+
+// parse request to body-parser
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// load assets
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
-const mongoose = require("mongoose");
 /* DB connection*/
-const mongoURI = process.env.MONGODB_URI;
-
-mongoose
-  .connect(mongoURI)
-  .then(() => console.log(`DB connected ${mongoURI}`))
-  .catch((err) => console.log(err));
+const db = require("./config/db");
+db.connect();
 
 app.use("/", indexRouter);
 
@@ -46,4 +46,5 @@ app.use((err, req, res, next) => {
     err.isOperational ? err.errorType : "Internal Server Error"
   );
 });
+
 module.exports = app;

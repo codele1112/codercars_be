@@ -63,4 +63,5 @@ carSchema.pre(/^find/, function (next) {
 
 //Create and export model
 const Car = mongoose.model("Car", carSchema);
+
 module.exports = Car;
