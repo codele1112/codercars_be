@@ -52,8 +52,8 @@ carController.editCar = async (req, res, next) => {
   //options allow you to modify query. e.g new true return lastest update of data
   const options = { new: true };
   const targetId = req.params.id;
-
   const updateInfo = req.body;
+  console.log("res", res);
   try {
     //mongoose query
     const updated = await Car.findByIdAndUpdate(targetId, updateInfo, options);
@@ -92,7 +92,7 @@ carController.deleteCar = async (req, res, next) => {
   try {
     //mongoose query
 
-    const updated = await Car.findOneAndUpdate(
+    const updated = await Car.findByIdAndUpdate(
       targetId,
       { isDeleted: true },
       options
