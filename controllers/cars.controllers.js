@@ -29,11 +29,11 @@ carController.getCars = async (req, res, next) => {
 
   const totalPage = Math.ceil(11915 / limit);
 
-  const filter = req.query;
+  const filter = {};
   try {
     //mongoose query
     const listOfFound = await Car.find(filter).skip(offset).limit(limit);
-
+    console.log("listOfFound", listOfFound);
     sendResponse(
       res,
       200,
